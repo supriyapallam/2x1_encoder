@@ -1,0 +1,35 @@
+//Design Code
+module enco2x1(output reg out,input [1:0]in);
+  always@*
+    begin
+      case(in)
+        2'b01 : out=1'b0;
+        2'b10 : out=1'b1;
+        default : out=1'bx;
+      endcase
+    end
+endmodule
+
+//Test Bench Code
+module tb();
+  wire out;
+  reg [1:0]in;
+  enco2x1 DUT(out,in);
+  integer i;
+  initial
+    begin
+      for(i=0;i<4;i=i+1)
+        begin
+          in=i;
+          #10;
+          if(!(out===1'bx))
+            $display("time=%0t,in=%b,out=%b",$time,in,out);
+        end
+    end
+  initial
+    begin
+      $dumpfile("test.vcd");
+      $dumpvars(1);
+    end
+endmodule
+
